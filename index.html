@@ -35,6 +35,70 @@
             padding: 0;
             text-shadow: 0px -5px brown, 5px 5px red, -5px 5px blue;
         }
+        .game {
+          width: 750px;
+          height: 150px;
+          margin: auto;
+          border-bottom: 4px ridge rgba(255, 255, 255, .1);
+          flex: 1 0 auto;
+        }
+        #player {
+          width: 50px;
+          height: 50px;
+          background-image: url("icon_transparent.png");
+          background-size: cover;
+          background-position: center;
+          position: relative;
+          top: 100px;
+        }
+
+        .animate {
+          animation: jump 0.3s linear;
+        }
+
+        @keyframes jump {
+          0% {
+            top: 100px;
+          }
+          30% {
+            top: 0px;
+          }
+          70% {
+            top: 0px;
+          }
+          100% {
+            top: 100px;
+          }
+        }
+
+        #block {
+          width: 46px;
+          height: 80px;
+          position: relative;
+          top: 20px;
+          left: 704px;
+          background: url("obstacle.png");
+          background-size: 46px 80px;
+        }
+
+        @keyframes block {
+          0% {
+            left: 704px;
+          }
+          100% {
+            left: -20px;
+          }
+        }
+
+        #score_container {
+            position: absolute;
+            width: 750px;
+            height: 150px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.2);
+            padding-top: 80px;
+            font-size: 40px;
+        }
     </style>
 </head>
 <body>
@@ -43,6 +107,12 @@
 
 <h1>NASERSI</h1>
 
+<div class="game">
+    <div id="score_container">Score: <span id="score">0</span></div>
+    <div id="player"></div>
+    <div id="block"></div>
+</div>
+
 <p>
     Once upon a modern day in the bustling heart of Central Europe, five daring friends from various corners of Slovakia decided to band together and embark on a digital crusade. Their clan name? "Nasersi," a choice that raised eyebrows and prompted chuckles across the online realms. 
     For those not in the know, "Nasersi" translates to "shit yourself" in English, a moniker so bold, so audacious, it was either the product of genius or a total lack of it. These lads were novices in the gaming world, armed with more enthusiasm than skill, and more ambition than strategy. 
@@ -50,4 +120,6 @@
 
 <p>Yet, they were determined to make their mark at <a href="https://event.vulkanlan.at/">VulkanLAN</a>, the legendary Austrian LAN party known as the battleground of the elite.</p>
 
-</body></html>
+</body>
+<script src="game.js"></script>
+</html>
