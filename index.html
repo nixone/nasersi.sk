@@ -45,7 +45,7 @@
         #player {
           width: 50px;
           height: 50px;
-          background-image: url("icon_transparent.png");
+          background-image: url("assets/icon_transparent.png");
           background-size: cover;
           background-position: center;
           position: relative;
@@ -77,7 +77,7 @@
           position: relative;
           top: 20px;
           left: 704px;
-          background: url("obstacle.png");
+          background: url("assets/obstacle.png");
           background-size: 46px 80px;
         }
 
@@ -99,11 +99,17 @@
             padding-top: 80px;
             font-size: 40px;
         }
+
+        @media only screen and (max-width: 750px) {
+            .game {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
 
-<img class="logo" src="logo.png">
+<img class="logo" src="assets/logo.png">
 
 <h1>NASERSI</h1>
 
@@ -121,5 +127,5 @@
 <p>Yet, they were determined to make their mark at <a href="https://event.vulkanlan.at/">VulkanLAN</a>, the legendary Austrian LAN party known as the battleground of the elite.</p>
 
 </body>
-<script src="game.js"></script>
+<script src="assets/game.js"></script>
 </html>
