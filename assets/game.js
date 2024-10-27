@@ -1,90 +1,80 @@
-//Global Variables
 var player = document.getElementById("player");
 var block = document.getElementById("block");
-var counter = 0;
-var gameStarted = false;
+var game = document.getElementById("game");
+var currentScore = 0;
+var running = false;
 var collisionEvent = new Event("collision");
 var scoreUpEvent = new Event("scoreUp");
 
-function userInput() {
-  if (!gameStarted) {
-    gameStarted = true;
-    block.style.animation = "block 1s infinite linear"; // Add animation to the block
-    gameLoop();
-    jump();
-  } else {
-    jump();
-  }
+function onKeyDown() {
+    if (event.code === "Space" && event.target === document.body) {
+        onUserInput();
+    }
 }
 
-// GameLoop Function
+function onUserInput() {
+    if (!running) {
+        running = true;
+        currentScore = 0;
+        block.style.animation = "block 1s infinite linear";
+        updateScore();
+        gameLoop();
+        jump();
+    } else {
+        jump();
+    }
+}
+
+function isPlayerCollidingWithBlock() {
+    var playerRect = player.getBoundingClientRect();
+    var blockRect = block.getBoundingClientRect();
+
+    return  playerRect.right >= blockRect.left &&
+            playerRect.left <= blockRect.right &&
+            playerRect.bottom >= blockRect.top &&
+            playerRect.top <= blockRect.bottom;
+}
+
+function isBlockCompletelyLeft() {
+    var blockRect = block.getBoundingClientRect();
+    var gameRect = game.getBoundingClientRect();
+}
+
 function gameLoop() {
-  // Check for collision between player and block
-  var playerRect = player.getBoundingClientRect();
-  var blockRect = block.getBoundingClientRect();
-
-  if (
-    playerRect.right >= blockRect.left &&
-    playerRect.left <= blockRect.right &&
-    playerRect.bottom >= blockRect.top &&
-    playerRect.top <= blockRect.bottom
-  ) {
-    // Collision occurred, trigger the custom event
-    player.dispatchEvent(collisionEvent);
-  } else {
-    // No Collision occurred, counter++
-    player.dispatchEvent(scoreUpEvent);
-  }
-  if (gameStarted) {
-    requestAnimationFrame(gameLoop); // Continuously call gameLoop
-  }
+    if (isPlayerCollidingWithBlock()) {
+        player.dispatchEvent(collisionEvent);
+    } else if (isBlockCompletelyLeft()) {
+        player.dispatchEvent(scoreUpEvent);
+    }
+    if (running) {
+        requestAnimationFrame(gameLoop);
+    }
 }
 
-// Jump function
 function jump() {
-  if (player.classList.contains("animate")) {
-    return;
-  }
-  player.classList.add("animate");
-  setTimeout(function () {
-    player.classList.remove("animate");
-  }, 300);
+    if (player.classList.contains("animate")) {
+        return;
+    }
+    player.classList.add("animate");
+    setTimeout(function () {
+        player.classList.remove("animate");
+    }, 300);
 }
 
-
-
-
-// Function to handle the SpaceBar keydown event
-function handleKeyDown(event) {
-  if (event.code === "Space" && event.target === document.body) {
-    userInput();
-  }
-}
-
-// Event listener for the collision event
 player.addEventListener("collision", function (event) {
-  // Handle the collision event
-  gameStarted = false;
-  block.style.animation = "none";
-  counter = 0;
-  document.getElementById("score").textContent = Math.floor(counter / 150);
-  document.getElementById("game").style.backgroundColor("red");
+    running = false;
+    block.style.animation = "none";
 });
 
-//Event listener for scoreUPevent
 player.addEventListener("scoreUp", function (event) {
-  //Handle scoreUp event
-  counter++;
-  updateScore();
+    currentScore++;
+    updateScore();
 });
 
-
-// Function to update the score
 function updateScore() {
-  var scoreSpan = document.getElementById("score");
-  scoreSpan.textContent = Math.floor(counter / 150);
+    var scoreSpan = document.getElementById("score");
+    scoreSpan.textContent = currentScore;
 }
 
-// Add event listener to the document object
-document.addEventListener("keydown", handleKeyDown);
-document.addEventListener("mousedown", userInput);
+document.addEventListener("keydown", onKeyDown);
+document.addEventListener("mousedown", onUserInput);
