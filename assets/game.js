@@ -3,8 +3,8 @@ var block = document.getElementById("block");
 var game = document.getElementById("game");
 var currentScore = 0;
 var running = false;
-var collisionEvent = new Event("collision");
-var scoreUpEvent = new Event("scoreUp");
+var detectingScoreUp = false;
+var blockSpeed = 0;
 
 function onKeyDown() {
     if (event.code === "Space" && event.target === document.body) {
@@ -12,11 +12,20 @@ function onKeyDown() {
     }
 }
 
+function setBlockSpeed(ms) {
+    blockSpeed = ms;
+    block.style.animation = "block " + ms + "ms linear infinite";
+}
+
+function stopBlock() {
+    block.style.animation = "none";
+}
+
 function onUserInput() {
     if (!running) {
+        setBlockSpeed(1000);
         running = true;
         currentScore = 0;
-        block.style.animation = "block 1s infinite linear";
         updateScore();
         gameLoop();
         jump();
@@ -35,16 +44,35 @@ function isPlayerCollidingWithBlock() {
             playerRect.top <= blockRect.bottom;
 }
 
+function isBlockLeft() {
+    var blockRect = block.getBoundingClientRect();
+    var gameRect = game.getBoundingClientRect();
+    return blockRect.left <= (gameRect.left + gameRect.right) / 2;
+}
+
 function isBlockCompletelyLeft() {
     var blockRect = block.getBoundingClientRect();
     var gameRect = game.getBoundingClientRect();
+
+    return blockRect.left <= gameRect.left;
+}
+
+function scoreUp() {
+    currentScore++;
+    detectingScoreUp = false;
+    updateScore();
 }
 
 function gameLoop() {
+    if (!isBlockLeft() && !detectingScoreUp) {
+        detectingScoreUp = true;
+    }
     if (isPlayerCollidingWithBlock()) {
-        player.dispatchEvent(collisionEvent);
-    } else if (isBlockCompletelyLeft()) {
-        player.dispatchEvent(scoreUpEvent);
+        running = false;
+        block.style.animation = "none";
+    } else if (detectingScoreUp && isBlockCompletelyLeft()) {
+        scoreUp();
+
     }
     if (running) {
         requestAnimationFrame(gameLoop);
@@ -61,20 +89,16 @@ function jump() {
     }, 300);
 }
 
-player.addEventListener("collision", function (event) {
-    running = false;
-    block.style.animation = "none";
-});
-
-player.addEventListener("scoreUp", function (event) {
-    currentScore++;
-    updateScore();
-});
-
 function updateScore() {
     var scoreSpan = document.getElementById("score");
     scoreSpan.textContent = currentScore;
+    var bestScore = localStorage.getItem("bestScore");
+    if (!bestScore || currentScore > bestScore) {
+        localStorage.setItem("bestScore", currentScore);
+    }
+    document.getElementById("bestScore").textContent = localStorage.getItem("bestScore");
 }
 
 document.addEventListener("keydown", onKeyDown);
 document.addEventListener("mousedown", onUserInput);
+updateScore();

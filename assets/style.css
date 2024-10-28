@@ -13,12 +13,11 @@ body {
     margin: 0 auto;
 }
 
-p.history {
+p {
     max-width: 1000px;
     margin: 20px auto;
-    font-size: small;
+    font-size: large;
     text-shadow: 3px 3px #222;
-    opacity: 0.5;
 }
 
 img.band {
@@ -77,21 +76,21 @@ h1 {
 }
 
 #block {
-  width: 46px;
-  height: 80px;
+  width: 34px;
+  height: 60px;
   position: relative;
-  top: 20px;
-  display: none;
+  top: 40px;
+  left: 750px;
   background: url("obstacle.png");
-  background-size: 46px 80px;
+  background-size: 34px 60px;
 }
 
 @keyframes block {
   0% {
-    left: 704px;
+    left: 750px;
   }
   100% {
-    left: -100px;
+    left: -50px;
   }
 }
 
@@ -101,12 +100,22 @@ h1 {
     height: 150px;
     text-align: center;
     color: rgba(255, 255, 255, 0.2);
-    padding-top: 80px;
+    padding-top: 60px;
     font-size: 40px;
 }
 
+#bestScore_container {
+    position: absolute;
+    width: 750px;
+    height: 150px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.2);
+    padding-top: 100px;
+    font-size: 20px;
+}
+
 @media only screen and (max-width: 750px) {
-    .game {
+    #game {
         display: none;
     }
 }
