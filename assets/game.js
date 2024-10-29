@@ -1,90 +1,104 @@
-//Global Variables
 var player = document.getElementById("player");
 var block = document.getElementById("block");
-var counter = 0;
-var gameStarted = false;
-var collisionEvent = new Event("collision");
-var scoreUpEvent = new Event("scoreUp");
+var game = document.getElementById("game");
+var currentScore = 0;
+var running = false;
+var detectingScoreUp = false;
+var blockSpeed = 0;
 
-function userInput() {
-  if (!gameStarted) {
-    gameStarted = true;
-    block.style.animation = "block 1s infinite linear"; // Add animation to the block
-    gameLoop();
-    jump();
-  } else {
-    jump();
-  }
+function onKeyDown() {
+    if (event.code === "Space" && event.target === document.body) {
+        onUserInput();
+    }
 }
 
-// GameLoop Function
+function setBlockSpeed(ms) {
+    blockSpeed = ms;
+    block.style.animation = "block " + ms + "ms linear infinite";
+}
+
+function stopBlock() {
+    block.style.animation = "none";
+}
+
+function onUserInput() {
+    if (!running) {
+        setBlockSpeed(1000);
+        running = true;
+        currentScore = 0;
+        updateScore();
+        gameLoop();
+        jump();
+    } else {
+        jump();
+    }
+}
+
+function isPlayerCollidingWithBlock() {
+    var playerRect = player.getBoundingClientRect();
+    var blockRect = block.getBoundingClientRect();
+
+    return  playerRect.right >= blockRect.left &&
+            playerRect.left <= blockRect.right &&
+            playerRect.bottom >= blockRect.top &&
+            playerRect.top <= blockRect.bottom;
+}
+
+function isBlockLeft() {
+    var blockRect = block.getBoundingClientRect();
+    var gameRect = game.getBoundingClientRect();
+    return blockRect.left <= (gameRect.left + gameRect.right) / 2;
+}
+
+function isBlockCompletelyLeft() {
+    var blockRect = block.getBoundingClientRect();
+    var gameRect = game.getBoundingClientRect();
+
+    return blockRect.left <= gameRect.left;
+}
+
+function scoreUp() {
+    currentScore++;
+    detectingScoreUp = false;
+    updateScore();
+}
+
 function gameLoop() {
-  // Check for collision between player and block
-  var playerRect = player.getBoundingClientRect();
-  var blockRect = block.getBoundingClientRect();
+    if (!isBlockLeft() && !detectingScoreUp) {
+        detectingScoreUp = true;
+    }
+    if (isPlayerCollidingWithBlock()) {
+        running = false;
+        block.style.animation = "none";
+    } else if (detectingScoreUp && isBlockCompletelyLeft()) {
+        scoreUp();
 
-  if (
-    playerRect.right >= blockRect.left &&
-    playerRect.left <= blockRect.right &&
-    playerRect.bottom >= blockRect.top &&
-    playerRect.top <= blockRect.bottom
-  ) {
-    // Collision occurred, trigger the custom event
-    player.dispatchEvent(collisionEvent);
-  } else {
-    // No Collision occurred, counter++
-    player.dispatchEvent(scoreUpEvent);
-  }
-  if (gameStarted) {
-    requestAnimationFrame(gameLoop); // Continuously call gameLoop
-  }
+    }
+    if (running) {
+        requestAnimationFrame(gameLoop);
+    }
 }
 
-// Jump function
 function jump() {
-  if (player.classList.contains("animate")) {
-    return;
-  }
-  player.classList.add("animate");
-  setTimeout(function () {
-    player.classList.remove("animate");
-  }, 300);
+    if (player.classList.contains("animate")) {
+        return;
+    }
+    player.classList.add("animate");
+    setTimeout(function () {
+        player.classList.remove("animate");
+    }, 300);
 }
 
-
-
-
-// Function to handle the SpaceBar keydown event
-function handleKeyDown(event) {
-  if (event.code === "Space" && event.target === document.body) {
-    userInput();
-  }
-}
-
-// Event listener for the collision event
-player.addEventListener("collision", function (event) {
-  // Handle the collision event
-  gameStarted = false;
-  block.style.animation = "none";
-  counter = 0;
-  document.getElementById("score").textContent = Math.floor(counter / 150);
-  document.getElementById("game").style.backgroundColor("red");
-});
-
-//Event listener for scoreUPevent
-player.addEventListener("scoreUp", function (event) {
-  //Handle scoreUp event
-  counter++;
-  updateScore();
-});
-
-
-// Function to update the score
 function updateScore() {
-  var scoreSpan = document.getElementById("score");
-  scoreSpan.textContent = Math.floor(counter / 150);
+    var scoreSpan = document.getElementById("score");
+    scoreSpan.textContent = currentScore;
+    var bestScore = localStorage.getItem("bestScore");
+    if (!bestScore || currentScore > bestScore) {
+        localStorage.setItem("bestScore", currentScore);
+    }
+    document.getElementById("bestScore").textContent = localStorage.getItem("bestScore");
 }
 
-// Add event listener to the document object
-document.addEventListener("keydown", handleKeyDown);
-document.addEventListener("mousedown", userInput);
+document.addEventListener("keydown", onKeyDown);
+document.addEventListener("mousedown", onUserInput);
+updateScore();
