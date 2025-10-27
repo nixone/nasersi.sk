@@ -1,7 +1,11 @@
 body {
     background-color: #011321;
+    background-image: url("background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
     font-family: "Pixelify Sans", sans-serif;
-
     color: white;
     text-align: center;
     padding-top: 50px;
