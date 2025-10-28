@@ -8,24 +8,31 @@ body {
     font-family: "Pixelify Sans", sans-serif;
     color: white;
     text-align: center;
-    padding-top: 50px;
+    padding: 10%;
 }
 
 .logo {
-    width: 400px;
-    height: 400px;
+    max-width: 400px;
+    width: 50%;
     margin: 0 auto;
+}
+
+.logo img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 p {
     max-width: 1000px;
     margin: 20px auto;
-    font-size: large;
+    font-size: x-large;
     text-shadow: 3px 3px #222;
 }
 
-img.band {
-    height: 50px;
+.band img {
+    max-width: 100%;
+    max-height: 50px;
 }
 
 a {
@@ -118,8 +125,14 @@ h1 {
     font-size: 20px;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 1000px) {
     #game {
         display: none;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    h1 {
+        font-size: 75px;
     }
 }
