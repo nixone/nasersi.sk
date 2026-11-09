@@ -18,13 +18,51 @@
         <h1>NASERSI</h1>
 
         <div id="countdown" data-target="2027-10-22T00:00:00+02:00">
-            <div class="countdown-title">Next <a href="https://event.vulkanlan.at/">VulkanLAN</a> in</div>
-            <div class="countdown-units">
-                <div><span id="cd-days">--</span><small>days</small></div>
-                <div><span id="cd-hours">--</span><small>hours</small></div>
-                <div><span id="cd-minutes">--</span><small>min</small></div>
-                <div><span id="cd-seconds">--</span><small>sec</small></div>
-            </div>
+            <svg viewBox="-40 -40 1080 1080" role="img" aria-label="Earth's orbit around the Sun with a countdown to the next VulkanLAN">
+                <defs>
+                    <radialGradient id="sun-fill">
+                        <stop offset="0%" stop-color="#fff7c2" />
+                        <stop offset="55%" stop-color="#ffc533" />
+                        <stop offset="100%" stop-color="#ff7a00" />
+                    </radialGradient>
+                    <radialGradient id="sun-glow">
+                        <stop offset="0%" stop-color="#ffb000" stop-opacity="0.55" />
+                        <stop offset="100%" stop-color="#ffb000" stop-opacity="0" />
+                    </radialGradient>
+                </defs>
+
+                <circle class="orbit-disc" cx="500" cy="500" r="400" />
+                <circle class="orbit" cx="500" cy="500" r="400" />
+                <path id="orbit-remaining" class="orbit-remaining" />
+                <g id="orbit-months"></g>
+
+                <circle cx="500" cy="500" r="110" fill="url(#sun-glow)" />
+                <circle cx="500" cy="500" r="45" fill="url(#sun-fill)" />
+
+                <g id="orbit-target" class="orbit-target">
+                    <circle r="20" />
+                    <text dy="7">VulkanLAN</text>
+                </g>
+                <g id="orbit-earth" class="orbit-earth">
+                    <circle class="earth-glow" r="26" />
+                    <circle r="15" />
+                    <text dy="7">Earth now</text>
+                </g>
+
+                <g class="cd" text-anchor="middle">
+                    <text id="cd-title" x="500" y="595" class="cd-title">Next <a href="https://event.vulkanlan.at/">VulkanLAN</a> in</text>
+                    <g id="cd-units">
+                        <text x="335" y="665" class="cd-num" id="cd-days">--</text>
+                        <text x="445" y="665" class="cd-num" id="cd-hours">--</text>
+                        <text x="555" y="665" class="cd-num" id="cd-minutes">--</text>
+                        <text x="665" y="665" class="cd-num" id="cd-seconds">--</text>
+                        <text x="335" y="695" class="cd-unit">days</text>
+                        <text x="445" y="695" class="cd-unit">hours</text>
+                        <text x="555" y="695" class="cd-unit">min</text>
+                        <text x="665" y="695" class="cd-unit">sec</text>
+                    </g>
+                </g>
+            </svg>
         </div>
 
         <div id="game">
