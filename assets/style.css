@@ -226,15 +226,15 @@ h1 {
 }
 
 .cd-title {
-    font-size: 60px;
+    font-size: 40px;
 }
 
 .cd-num {
-    font-size: 128px;
+    font-size: 85px;
 }
 
 .cd-unit {
-    font-size: 40px;
+    font-size: 27px;
     opacity: 0.7;
 }
 
