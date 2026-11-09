@@ -11,14 +11,10 @@
     </head>
     <body>
 
-        <div class="logo">
-            <img src="assets/logo_transparent.png">
-        </div>
-
         <h1>NASERSI</h1>
 
         <div id="countdown" data-target="2027-10-22T00:00:00+02:00">
-            <svg viewBox="-40 -40 1080 1080" role="img" aria-label="Earth's orbit around the Sun with a countdown to the next VulkanLAN">
+            <svg viewBox="-120 -120 1240 1240" role="img" aria-label="Earth's orbit around the Sun with a countdown to the next VulkanLAN">
                 <defs>
                     <radialGradient id="sun-fill">
                         <stop offset="0%" stop-color="#fff7c2" />
@@ -31,12 +27,14 @@
                     </radialGradient>
                 </defs>
 
-                <circle class="orbit-disc" cx="500" cy="500" r="400" />
-                <circle class="orbit" cx="500" cy="500" r="400" />
+                <circle class="orbit-disc" cx="500" cy="500" r="480" />
+                <circle class="orbit" cx="500" cy="500" r="480" />
                 <path id="orbit-remaining" class="orbit-remaining" />
                 <g id="orbit-months"></g>
 
-                <circle cx="500" cy="500" r="110" fill="url(#sun-glow)" />
+                <image href="assets/logo_transparent.png" x="348" y="90" width="304" height="320" />
+
+                <circle cx="500" cy="500" r="90" fill="url(#sun-glow)" />
                 <circle cx="500" cy="500" r="45" fill="url(#sun-fill)" />
 
                 <g id="orbit-target" class="orbit-target">
@@ -50,16 +48,16 @@
                 </g>
 
                 <g class="cd" text-anchor="middle">
-                    <text id="cd-title" x="500" y="595" class="cd-title">Next <a href="https://event.vulkanlan.at/">VulkanLAN</a> in</text>
+                    <text id="cd-title" x="500" y="625" class="cd-title">Next <a href="https://event.vulkanlan.at/">VulkanLAN</a> in</text>
                     <g id="cd-units">
-                        <text x="335" y="665" class="cd-num" id="cd-days">--</text>
-                        <text x="445" y="665" class="cd-num" id="cd-hours">--</text>
-                        <text x="555" y="665" class="cd-num" id="cd-minutes">--</text>
-                        <text x="665" y="665" class="cd-num" id="cd-seconds">--</text>
-                        <text x="335" y="695" class="cd-unit">days</text>
-                        <text x="445" y="695" class="cd-unit">hours</text>
-                        <text x="555" y="695" class="cd-unit">min</text>
-                        <text x="665" y="695" class="cd-unit">sec</text>
+                        <text x="230" y="755" class="cd-num" id="cd-days">--</text>
+                        <text x="448" y="755" class="cd-num" id="cd-hours">--</text>
+                        <text x="628" y="755" class="cd-num" id="cd-minutes">--</text>
+                        <text x="808" y="755" class="cd-num" id="cd-seconds">--</text>
+                        <text x="230" y="805" class="cd-unit">days</text>
+                        <text x="448" y="805" class="cd-unit">hours</text>
+                        <text x="628" y="805" class="cd-unit">min</text>
+                        <text x="808" y="805" class="cd-unit">sec</text>
                     </g>
                 </g>
             </svg>

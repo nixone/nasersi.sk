@@ -6,7 +6,7 @@
     const target = new Date(root.dataset.target);
     const $ = id => document.getElementById(id);
     const NS = "http://www.w3.org/2000/svg";
-    const C = 500, R = 400, LABEL_R = 450, MONTH_R = 365;
+    const C = 500, R = 480, LABEL_R = 575, MONTH_R = 520;
     const rad = Math.PI / 180;
     const mod = (a, n) => ((a % n) + n) % n;
     const pad = n => String(n).padStart(2, "0");

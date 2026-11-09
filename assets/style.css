@@ -138,7 +138,7 @@ h1 {
 }
 #countdown {
     width: 100%;
-    max-width: 700px;
+    max-width: 850px;
     margin: 20px auto 40px;
 }
 
@@ -154,7 +154,7 @@ h1 {
     font-family: "Pixelify Sans", sans-serif;
 }
 
-#countdown a text, #countdown a {
+#countdown a {
     fill: #ffc533;
     text-decoration: underline;
 }
@@ -165,26 +165,39 @@ h1 {
 
 .orbit {
     fill: none;
-    stroke: rgba(255, 255, 255, 0.25);
-    stroke-width: 3;
+    stroke: #777;
+    stroke-width: 4;
 }
 
+/* Remaining path to VulkanLAN: dashes flow in the direction Earth travels. */
 .orbit-remaining {
     fill: none;
-    stroke: #ffc533;
-    stroke-width: 4;
+    stroke: #ccc;
+    stroke-width: 5;
     stroke-dasharray: 14 10;
-    opacity: 0.8;
+    animation: orbit-flow 1s linear infinite;
+}
+
+@keyframes orbit-flow {
+    to {
+        stroke-dashoffset: -24;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .orbit-remaining {
+        animation: none;
+    }
 }
 
 .orbit-month line {
-    stroke: rgba(255, 255, 255, 0.4);
+    stroke: #999;
     stroke-width: 3;
 }
 
 .orbit-month text {
-    font-size: 20px;
-    opacity: 0.5;
+    font-size: 22px;
+    opacity: 0.6;
     text-anchor: middle;
     dominant-baseline: middle;
 }
@@ -208,33 +221,29 @@ h1 {
 }
 
 .orbit-earth text, .orbit-target text {
-    font-size: 28px;
+    font-size: 30px;
     text-anchor: middle;
 }
 
 .cd-title {
-    font-size: 30px;
+    font-size: 60px;
 }
 
 .cd-num {
-    font-size: 64px;
+    font-size: 128px;
 }
 
 .cd-unit {
-    font-size: 20px;
+    font-size: 40px;
     opacity: 0.7;
 }
 
 @media only screen and (max-width: 750px) {
-    .orbit-month text, .cd-unit {
-        font-size: 28px;
+    .orbit-month text {
+        font-size: 32px;
     }
 
     .orbit-earth text, .orbit-target text {
-        font-size: 36px;
-    }
-
-    .cd-title {
-        font-size: 38px;
+        font-size: 40px;
     }
 }
